@@ -8,11 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Login to docker hub
-        uses: actions/checkout@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Login to docker hub
+      - uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+        # with:
+        #   username: ${{ secrets.DOCKER_USERNAME }}
+        #   password: ${{ secrets.DOCKER_PASSWORD }}
 
       - run: docker build -t raghavendra31789/react-test -f ./client/Dockerfile.dev ./client
       - run: docker run -e CI=true raghavendra31789/react-test npm test
