@@ -14,15 +14,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: docker build -t essentylz/react-test -f ./client/Dockerfile.dev ./client
-      - run: docker run -e CI=true essentylz/react-test npm test
+      - run: docker build -t raghavendra31789/react-test -f ./client/Dockerfile.dev ./client
+      - run: docker run -e CI=true raghavendra31789/react-test npm test
 
-      - run: docker build -t essentylz/multi-client ./client
-      - run: docker build -t essentylz/multi-nginx ./nginx
-      - run: docker build -t essentylz/multi-server ./server
-      - run: docker build -t essentylz/multi-worker ./worker
+      - run: docker build -t raghavendra31789/multi-client ./client
+      - run: docker build -t raghavendra31789/multi-nginx ./nginx
+      - run: docker build -t raghavendra31789/multi-server ./server
+      - run: docker build -t raghavendra31789/multi-worker ./worker
 
-      - run: docker push essentylz/multi-client
-      - run: docker push essentylz/multi-nginx
-      - run: docker push essentylz/multi-server
-      - run: docker push essentylz/multi-worker
+      - run: docker push raghavendra31789/multi-client
+      - run: docker push raghavendra31789/multi-nginx
+      - run: docker push raghavendra31789/multi-server
+      - run: docker push raghavendra31789/multi-worker
