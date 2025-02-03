@@ -8,13 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # - name: Login to docker hub
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-        # with:
-        #   username: ${{ secrets.DOCKER_USERNAME }}
-        #   password: ${{ secrets.DOCKER_PASSWORD }}
 
       - run: docker build -t raghavendra31789/react-test -f ./client/Dockerfile.dev ./client
       - run: docker run -e CI=true raghavendra31789/react-test npm test
@@ -28,3 +23,18 @@ jobs:
       - run: docker push raghavendra31789/multi-nginx
       - run: docker push raghavendra31789/multi-server
       - run: docker push raghavendra31789/multi-worker
+
+      - name: Generate Deployments packages
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: frontend
+          environment_name: Frontend-dev
+          existing_bucket_name: elasticbeanstalk-ap-south-1-970547360224
+          region: ap-south-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
