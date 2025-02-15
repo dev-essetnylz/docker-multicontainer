@@ -45,7 +45,18 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-
+    depends_on:
+      - client
+      - postgres
+      - api 
+      - redis
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 10
+      start_period: 30s
   nginx:
     restart: always
 

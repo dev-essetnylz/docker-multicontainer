@@ -15,14 +15,22 @@ app.use(bodyParser.json());
 
 
 const { Pool } = require('pg');
+// const pgClient = new Pool({
+//   user: keys.pgUser,
+//   host: keys.pgHost,
+//   database: keys.pgDatabase,
+//   password: keys.pgPassword,
+//   port: keys.pgPort,
+//   ssl:
+//   process.env.NODE_ENV !== 'production' ? false : { rejectUnauthorized: false},
+// })
+
 const pgClient = new Pool({
   user: keys.pgUser,
   host: keys.pgHost,
   database: keys.pgDatabase,
   password: keys.pgPassword,
   port: keys.pgPort,
-  ssl:
-  process.env.NODE_ENV !== 'production' ? false : { rejectUnauthorized: false},
 })
 
 
